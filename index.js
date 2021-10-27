@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT || 3001
+app.use(express.static('arquivos'));
+
 
 //conexão
 const mongoose = require('mongoose');
@@ -22,12 +24,38 @@ const schema = mongoose.Schema({
 })
 const projeto = mongoose.model('meu_projeto',schema);
 app.use(express.json());
+
+
+//config multer
+
+const multer = require('multer');
+const path = require('path');
+const crypo = require('crypto');
+const config = {
+    storage:multer.diskStorage({
+        destination: (req,file,cb)=>{
+          cb(null,path.resolve(__dirname,"arquivos"))
+        },
+        filename: (req,file,cb)=>{
+            crypo.randomBytes(8,(err,hash)=>{
+                const fileName = `${hash.toString('hex')}-${file.originalname}`;
+                cb(null,fileName);
+            })
+        }
+    })
+}
+
+
+
+
 app.get('/',async(req,res)=>{
   const p = await projeto.find();
   res.json(p)
 })
-app.post('/',(req,res)=>{
 
+
+app.post('/',multer(config).single('imagem'),(req,res)=>{
+     
 })
 app.delete('/',(req,res)=>{
     
