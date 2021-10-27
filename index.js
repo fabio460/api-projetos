@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
-
+require('dotenv').config();
+const PORT = process.env.PORT || 3001
 const mongoose = require('mongoose');
-mongoose.connect("mongodb+srv://meuBanco:fabio2020@cluster0.w2xad.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",{
+mongoose.connect(process.env.DATABASE_URL,{
     useNewUrlParser:true,
     useUnifiedTopology:true
 })
@@ -20,4 +21,4 @@ app.post('/',(req,res)=>{
 app.delete('/',(req,res)=>{
     
 })
-app.listen(3001,()=>{console.log('conectado na porta 3001')});
+app.listen(PORT,()=>{console.log('conectado na porta 3001')});
