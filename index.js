@@ -28,6 +28,23 @@ app.use(express.json());
 
 //config multer
 
+const multer = require('multer');
+const path = require('path');
+const crypo = require('crypto');
+const config = {
+    storage:multer.diskStorage({
+        destination: (req,file,cb)=>{
+          cb(null,path.resolve(__dirname,"arquivos"))
+        },
+        filename: (req,file,cb)=>{
+            crypo.randomBytes(8,(err,hash)=>{
+                const fileName = `${hash.toString('hex')}-${file.originalname}`;
+                cb(null,fileName);
+            })
+        }
+    })
+}
+
 
 
 
@@ -37,8 +54,8 @@ app.get('/',async(req,res)=>{
 })
 
 
-app.post('/',(req,res)=>{
-     
+app.post('/',multer(config).single('arquivos'),(req,res)=>{
+
 })
 app.delete('/',(req,res)=>{
     
