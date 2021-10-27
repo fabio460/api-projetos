@@ -54,8 +54,18 @@ app.get('/',async(req,res)=>{
 })
 
 
-app.post('/',multer(config).single('arquivos'),(req,res)=>{
-
+app.post('/',multer(config).single('imagem'),(req,res)=>{
+   const sim = projeto.create({
+        titulo:req.body.titulo,
+        imagem:req.file.filename,
+        descricao:req.body.descricao,
+        url:req.body.url
+   })
+   if(sim){
+       res.send('inserido com sucesso')
+   }else{
+       res.send('falha na inserção')
+   }
 })
 app.delete('/',(req,res)=>{
     
