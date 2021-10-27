@@ -2,10 +2,13 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT || 3001
+<<<<<<< HEAD
 app.use(express.static('arquivos'));
 
 
 //conexão
+=======
+>>>>>>> parent of 286322d (teste de deploy 5)
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DATABASE_URL,{
     useNewUrlParser:true,
@@ -15,6 +18,7 @@ const db = mongoose.connection;
 db.on("err",err=>console.error(err))
 db.once("open",()=>{console.log("conectado no banco de dados")})
 
+<<<<<<< HEAD
 //criando tabela no mongo
 const schema = mongoose.Schema({
     titulo:'string',
@@ -51,6 +55,11 @@ const config = {
 app.get('/',async(req,res)=>{
   const p = await projeto.find();
   res.json(p)
+=======
+
+app.get('/',(req,res)=>{
+    res.send('teste')
+>>>>>>> parent of 286322d (teste de deploy 5)
 })
 
 
