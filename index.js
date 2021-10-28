@@ -53,6 +53,11 @@ app.get('/',async(req,res)=>{
   res.json(p)
 })
 
+app.get('/busca/:texto',async(req,res)=>{
+    const str = req.params.texto
+    const p = await projeto.find({"titulo": str})
+    res.json(p)
+  })
 
 app.post('/',multer(config).single('imagem'),(req,res)=>{
    const sim = projeto.create({
